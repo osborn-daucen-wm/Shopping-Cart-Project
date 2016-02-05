@@ -1,22 +1,51 @@
-<!-- OPEN IN FIREFOX IF THE VIDEO DOES NOT LOAD RIGHT AWAY --- DO NOT OPEN IN SAFARI @ ALL --- IF YOU OPEN IN CHROME IT MIGHT TAKE SOME TIME FOR THE VIDEO TO LOAD -->
 <?php
 require_once('connect.php');
 $error = false;
 $success = false;
 
-$sql = "select * from products";
+if (@$_POST['formSubmit']) {
+    $errorMessage = false;
 
-foreach ($dbh->query($sql) as $row) {
-    echo $row['name'];
+    if (empty($_POST['firstname'])) {
+        $errorMessage = "<li>Enter your first name!</li>";
+    }
+    if (empty($_POST['username'])) {
+        $errorMessage = "<li>Enter a username!</li>";
+    }
+    if (empty($_POST['email'])) {
+        $errorMessage = "<li>Enter your email!</li>";
+    }
+
+    if (empty($_POST['password'])) {
+        $errorMessage = "<li>Enter your password!</li>";
+    }
+
+
+    $stmt = $dbh->prepare("INSERT INTO signup (id, firstname, username, email, password) VALUES (:id, :firstname, :username, :email, :password)");
+
+    $result = $stmt->execute(
+        array(
+            'id' => NULL,
+            'firstname' => $_POST['firstname'],
+            'username' => $_POST['username'],
+            'email' => $_POST['email'],
+            'password' => $_POST['password']
+        )
+    );
+
+    if (!$result) {
+
+    }
+    {
+        echo("<p>There was an error with your form:</p>\n");
+        echo("<ul>" . $errorMessage . "</ul>\n");
+    }
+
 }
-//F1F2EB
-//DD3737
-//5C6B73
-//2C4251
-//253237
 ?>
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
@@ -31,22 +60,32 @@ foreach ($dbh->query($sql) as $row) {
         .mdl-layout__header-row {
             background-color: #2C4251;
         }
-        #footer {
-            margin-top: 3%;
+        html, body {
+            height: 100%
         }
+        .signupfoot {
+            position: inherit;
+            bottom: 0px;
+        }
+        #footer {
+            position: fixed;
+            bottom: 0%;
+        }
+        .mdl-layout__content {
+            z-index: -1;
+        }
+
     </style>
     <title>OzWatch</title>
 </head>
 <body>
-
-
-<!-- Uses a header that contracts as the page scrolls down. -->
 <style>
     .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
         padding-right: 0;
     }
+
     .mdl-layout-title {
-        font-size: 250% ;
+        font-size: 250%;
     }
 </style>
 
@@ -86,18 +125,10 @@ foreach ($dbh->query($sql) as $row) {
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="search.php?product=rolex">Rolex</a>
-            <a class="mdl-navigation__link" href="">Fossil</a>
-            <a class="mdl-navigation__link" href="">Skagen</a>
-            <a class="mdl-navigation__link" href="">Belova</a>
-            <a class="mdl-navigation__link" href="">Omega</a>
-            <a class="mdl-navigation__link" href="">Brightling</a>
-            <a class="mdl-navigation__link" href="">Movato</a>
-            <a class="mdl-navigation__link" href="">Citizen</a>
-            <a class="mdl-navigation__link" href="">Seiko</a>
-            <a class="mdl-navigation__link" href="">Invictus</a>
-            <a class="mdl-navigation__link" href="">Casio</a>
-            <a class="mdl-navigation__link" href="">Suunto</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
@@ -106,31 +137,31 @@ foreach ($dbh->query($sql) as $row) {
 </div>
 
 <div id="container">
-    <div id="homepic1">
-        <img id="picture1" src="Pictures/sideWatch.jpg">
-    </div>
 
-    <div id="cityBG">
-        <img id="picGroupBG" src="Pictures/blurBG.jpg">
-    </div>
+    <div id="form">
+        <center>
+            <form method="post">
+                <h2>Register for OzWatch</h2>
+                <label>Name :</label>
+                <input type="text" name="firstname" id="name" required> <br><br>
+                <label>Email :</label>
+                <input type="text" name="email" id="email" required> <br><br>
+                <label> Username : </label>
+                <input type="text" name="username" id="username" required> <br><br>
+                <label>Password :</label>
+                <input type="password" name="password" id="password" required><br><br>
+                <br>
 
-    <div id="picgroup1">
-        <img id="picture2" src="Pictures/sandRolex.jpg">
-        <img id="picture3" src="Pictures/fossilPort.jpg">
-        <img id="picture4" src="Pictures/perretCity.jpg">
-    </div>
+                <button type="submit" name="formSubmit" value="1">Add New User</button>
 
-    <div id="textBox3">
-        <h4>Qualities timepieces from all types of brands and styles.</h4>
-    </div>
-
-    <div id="footerpic">
-        <img id="picture5" src="Pictures/smartwatch.jpg">
+            </form>
+        </center>
     </div>
 
     <div id="footer">
         <table id="footerTable">
             <tr>
+
 
                 <th class="footer1"><a href="about.html">About OzWatch</a></th>
                 <th class="footer1"><a href="about.html">Email Us</a></th>
@@ -142,6 +173,9 @@ foreach ($dbh->query($sql) as $row) {
             </tr>
         </table>
     </div>
+
 </div>
+
 </body>
+
 </html>

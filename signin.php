@@ -1,22 +1,50 @@
-<!-- OPEN IN FIREFOX IF THE VIDEO DOES NOT LOAD RIGHT AWAY --- DO NOT OPEN IN SAFARI @ ALL --- IF YOU OPEN IN CHROME IT MIGHT TAKE SOME TIME FOR THE VIDEO TO LOAD -->
 <?php
 require_once('connect.php');
 $error = false;
 $success = false;
 
-$sql = "select * from products";
+session_start();
 
-foreach ($dbh->query($sql) as $row) {
-    echo $row['name'];
+//$registered = $_SESSION["registered"];
+//$username = $_SESSION["username"];
+
+if(isset($_SESSION['username'])){
+    header('location: index.php');
 }
-//F1F2EB
-//DD3737
-//5C6B73
-//2C4251
-//253237
+
+$error = false;
+$success = false;
+
+if(@$_POST['login']) {
+    if (!$_POST['username']) {
+    }
+    if (!$_POST['password']) {
+    }
+
+    $query = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
+    $result = $query->execute(
+        array(
+            'username' => $_POST['username'],
+            'password' => $_POST['password']
+        )
+    );
+    $userinfo = $query->fetch();
+    if ($userinfo) {
+
+        $success = "User, " . $_POST['username'] . " was successfully logged in.";
+
+        $_SESSION["firstname"] = $userinfo['firstname'];
+        $_SESSION["username"] = $userinfo['username'];
+
+        header("Location: index.php");
+    } else {
+        $success = "There was an error logging into the account.";
+    }
+}
 ?>
 
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
@@ -31,22 +59,32 @@ foreach ($dbh->query($sql) as $row) {
         .mdl-layout__header-row {
             background-color: #2C4251;
         }
-        #footer {
-            margin-top: 3%;
+        html, body {
+            height: 100%
         }
+        .signupfoot {
+            position: inherit;
+            bottom: 0px;
+        }
+        #footer {
+            position: fixed;
+            bottom: 0%;
+        }
+        .mdl-layout__content {
+            z-index: -1;
+        }
+
     </style>
     <title>OzWatch</title>
 </head>
 <body>
-
-
-<!-- Uses a header that contracts as the page scrolls down. -->
 <style>
     .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
         padding-right: 0;
     }
+
     .mdl-layout-title {
-        font-size: 250% ;
+        font-size: 250%;
     }
 </style>
 
@@ -86,18 +124,10 @@ foreach ($dbh->query($sql) as $row) {
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="search.php?product=rolex">Rolex</a>
-            <a class="mdl-navigation__link" href="">Fossil</a>
-            <a class="mdl-navigation__link" href="">Skagen</a>
-            <a class="mdl-navigation__link" href="">Belova</a>
-            <a class="mdl-navigation__link" href="">Omega</a>
-            <a class="mdl-navigation__link" href="">Brightling</a>
-            <a class="mdl-navigation__link" href="">Movato</a>
-            <a class="mdl-navigation__link" href="">Citizen</a>
-            <a class="mdl-navigation__link" href="">Seiko</a>
-            <a class="mdl-navigation__link" href="">Invictus</a>
-            <a class="mdl-navigation__link" href="">Casio</a>
-            <a class="mdl-navigation__link" href="">Suunto</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
@@ -106,26 +136,39 @@ foreach ($dbh->query($sql) as $row) {
 </div>
 
 <div id="container">
-    <div id="homepic1">
-        <img id="picture1" src="Pictures/sideWatch.jpg">
-    </div>
 
-    <div id="cityBG">
-        <img id="picGroupBG" src="Pictures/blurBG.jpg">
-    </div>
-
-    <div id="picgroup1">
-        <img id="picture2" src="Pictures/sandRolex.jpg">
-        <img id="picture3" src="Pictures/fossilPort.jpg">
-        <img id="picture4" src="Pictures/perretCity.jpg">
-    </div>
-
-    <div id="textBox3">
-        <h4>Qualities timepieces from all types of brands and styles.</h4>
-    </div>
-
-    <div id="footerpic">
-        <img id="picture5" src="Pictures/smartwatch.jpg">
+    <div id="form">
+        <center>
+            <form method="POST">
+                <h2>Sign - In</h2>
+                <label>Username :</label>
+                <input type="text" name="username" id="name" required> <br><br>
+                <label> Password :</label>
+                <input type="text" name="password" id="passsword" required> <br><br>
+                <button type="submit" name="login" value="1">Sign In</button>
+                <?php
+                if(isset($_SESSION['registered'])){
+                    echo '<p id="registered">Successfully Registered</p>';
+                    unset($_SESSION['registered']);
+                }
+                ?>
+                <?php
+                if($error){
+                    echo $error;
+                    echo '<br>';
+                }
+                if($success){
+                    echo $success;
+                    echo '<br>';
+                }
+                ?>
+            </form>
+            <div id="buttonsu">
+                <a href="signup.php">
+                    <button>Sign Up</button>
+                </a>
+            </div>
+        </center>
     </div>
 
     <div id="footer">
@@ -142,6 +185,9 @@ foreach ($dbh->query($sql) as $row) {
             </tr>
         </table>
     </div>
+
 </div>
+
 </body>
+
 </html>

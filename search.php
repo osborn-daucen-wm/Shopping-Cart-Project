@@ -1,55 +1,25 @@
-<!-- OPEN IN FIREFOX IF THE VIDEO DOES NOT LOAD RIGHT AWAY --- DO NOT OPEN IN SAFARI @ ALL --- IF YOU OPEN IN CHROME IT MIGHT TAKE SOME TIME FOR THE VIDEO TO LOAD -->
 <?php
 require_once('connect.php');
 $error = false;
 $success = false;
 
-$sql = "select * from products";
+$stmt = $dbh->prepare("SELECT * FROM products p WHERE p.type = :product");
+$stmt->execute(array(':product' => $_GET['product']));
+$results = $stmt->fetchAll();
 
-foreach ($dbh->query($sql) as $row) {
-    echo $row['name'];
-}
-//F1F2EB
-//DD3737
-//5C6B73
-//2C4251
-//253237
 ?>
-
 <!DOCTYPE html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
-          href="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnmTDYKCeLOIJbw2A3klLVfderw8VCr9gPdqAEv3NPZju2XrSovg">
+          href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/black-paint-splatter-icons-alphanumeric/069096-black-paint-splatter-icon-alphanumeric-letter-rr.png">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="jquery.js"></script>
     <script type="text/javascript" src="script.js"></script>
-    <link rel="stylesheet" href="./material.min.css">
-    <script src="./material.min.js"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <style>
-        .mdl-layout__header-row {
-            background-color: #2C4251;
-        }
-        #footer {
-            margin-top: 3%;
-        }
-    </style>
-    <title>OzWatch</title>
+    <title>RentAPet</title>
 </head>
+
 <body>
-
-
-<!-- Uses a header that contracts as the page scrolls down. -->
-<style>
-    .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
-        padding-right: 0;
-    }
-    .mdl-layout-title {
-        font-size: 250% ;
-    }
-</style>
-
 <div class="demo-layout-waterfall mdl-layout mdl-js-layout">
     <header class="mdl-layout__header mdl-layout__header--waterfall">
         <!-- Top row, always visible -->
@@ -86,18 +56,10 @@ foreach ($dbh->query($sql) as $row) {
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="search.php?product=rolex">Rolex</a>
-            <a class="mdl-navigation__link" href="">Fossil</a>
-            <a class="mdl-navigation__link" href="">Skagen</a>
-            <a class="mdl-navigation__link" href="">Belova</a>
-            <a class="mdl-navigation__link" href="">Omega</a>
-            <a class="mdl-navigation__link" href="">Brightling</a>
-            <a class="mdl-navigation__link" href="">Movato</a>
-            <a class="mdl-navigation__link" href="">Citizen</a>
-            <a class="mdl-navigation__link" href="">Seiko</a>
-            <a class="mdl-navigation__link" href="">Invictus</a>
-            <a class="mdl-navigation__link" href="">Casio</a>
-            <a class="mdl-navigation__link" href="">Suunto</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="">Link</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
@@ -106,26 +68,38 @@ foreach ($dbh->query($sql) as $row) {
 </div>
 
 <div id="container">
-    <div id="homepic1">
-        <img id="picture1" src="Pictures/sideWatch.jpg">
-    </div>
 
-    <div id="cityBG">
-        <img id="picGroupBG" src="Pictures/blurBG.jpg">
-    </div>
+    <div id="searchinfo">
+        <h1><?php echo $_GET['animal']; ?></h1>
 
-    <div id="picgroup1">
-        <img id="picture2" src="Pictures/sandRolex.jpg">
-        <img id="picture3" src="Pictures/fossilPort.jpg">
-        <img id="picture4" src="Pictures/perretCity.jpg">
-    </div>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            if (count($results) > 0) {
+                foreach ($results as $product) {
 
-    <div id="textBox3">
-        <h4>Qualities timepieces from all types of brands and styles.</h4>
-    </div>
+                    $productname = $product['name'];
 
-    <div id="footerpic">
-        <img id="picture5" src="Pictures/smartwatch.jpg">
+                    echo '<tr>';
+                    echo "<td><a href='productProfile.php?id=" . $product['id'] . "'>{$productname}</a></td>";
+                    echo '</tr>';
+                }
+            } else {
+                echo '<tr>';
+                echo '<td>0 Results Found.</td>';
+                echo '</tr>';
+            }
+            ?>
+            </tbody>
+        </table>
+        <?php
+
+        ?>
     </div>
 
     <div id="footer">
@@ -144,4 +118,4 @@ foreach ($dbh->query($sql) as $row) {
     </div>
 </div>
 </body>
-</html>
+

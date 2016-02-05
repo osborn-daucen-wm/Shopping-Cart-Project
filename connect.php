@@ -10,7 +10,7 @@ $username = 'root';
 $password = 'root';
 
 try {
-    $dbh = new PDO("mysql:host=$hostname;dbname=rentapet", $username, $password);
+    $dbh = new PDO("mysql:host=$hostname;dbname=ozwatch", $username, $password);
     /*** echo a message saying we have connected ***/
 } catch (PDOException $e) {
 }
