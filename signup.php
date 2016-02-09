@@ -21,7 +21,7 @@ if (@$_POST['formSubmit']) {
     }
 
 
-    $stmt = $dbh->prepare("INSERT INTO signup (id, firstname, username, email, password) VALUES (:id, :firstname, :username, :email, :password)");
+    $stmt = $dbh->prepare("INSERT INTO users (id, firstname, username, email, password) VALUES (:id, :firstname, :username, :email, :password)");
 
     $result = $stmt->execute(
         array(
@@ -125,10 +125,18 @@ if (@$_POST['formSubmit']) {
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="search.php?product=Rolex">Rolex</a>
+            <a class="mdl-navigation__link" href="search.php?product=Fossil">Fossil</a>
+            <a class="mdl-navigation__link" href="search.php?product=Skagen">Skagen</a>
+            <a class="mdl-navigation__link" href="search.php?product=Bulova">Bulova</a>
+            <a class="mdl-navigation__link" href="search.php?product=Omega">Omega</a>
+            <a class="mdl-navigation__link" href="search.php?product=Breitling">Breitling</a>
+            <a class="mdl-navigation__link" href="search.php?product=Movado">Movado</a>
+            <a class="mdl-navigation__link" href="search.php?product=Citizen">Citizen</a>
+            <a class="mdl-navigation__link" href="search.php?product=Seiko">Seiko</a>
+            <a class="mdl-navigation__link" href="search.php?product=Invictus">Invictus</a>
+            <a class="mdl-navigation__link" href="search.php?product=Casio">Casio</a>
+            <a class="mdl-navigation__link" href="search.php?product=Suunto">Suunto</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
@@ -138,7 +146,7 @@ if (@$_POST['formSubmit']) {
 
 <div id="container">
 
-    <div id="form">
+    <div id="formSubmit">
         <center>
             <form method="post">
                 <h2>Register for OzWatch</h2>

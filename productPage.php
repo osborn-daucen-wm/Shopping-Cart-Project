@@ -1,21 +1,36 @@
-<!-- OPEN IN FIREFOX IF THE VIDEO DOES NOT LOAD RIGHT AWAY --- DO NOT OPEN IN SAFARI @ ALL --- IF YOU OPEN IN CHROME IT MIGHT TAKE SOME TIME FOR THE VIDEO TO LOAD -->
 <?php
 require_once('connect.php');
 $error = false;
 $success = false;
 
-$sql = "select * from products";
 
-foreach ($dbh->query($sql) as $row) {
+$stmt = $dbh->prepare("select * from products where id = " . $_GET['id']);
+$stmt->execute();
+$product = $stmt->fetch();
+
+if (@$_POST['addToCart']) {
+    $errorMessage = false;
+
+    $sql = $dbh->prepare("INSERT INTO cart (id, name, price) VALUES (:id, :name, :price)");
+
+    $result = $sql->execute(
+        array(
+            'id' => NULL,
+            'name' => $_POST['name'],
+            'price' => $_POST['price'],
+        )
+    );
+
+    if (!$result) {
+
+    }
+    {
+        echo("<p>There was an error with your form:</p>\n");
+        echo("<ul>" . $errorMessage . "</ul>\n");
+    }
 
 }
-//F1F2EB
-//DD3737
-//5C6B73
-//2C4251
-//253237
 ?>
-
 <!DOCTYPE html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
@@ -31,8 +46,17 @@ foreach ($dbh->query($sql) as $row) {
         .mdl-layout__header-row {
             background-color: #2C4251;
         }
+
         #footer {
+            position: fixed;
             margin-top: 3%;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            border: #DD3737 5px solid;
+            padding: 0;
         }
     </style>
     <title>OzWatch</title>
@@ -45,8 +69,9 @@ foreach ($dbh->query($sql) as $row) {
     .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
         padding-right: 0;
     }
+
     .mdl-layout-title {
-        font-size: 250% ;
+        font-size: 250%;
     }
 </style>
 
@@ -101,47 +126,92 @@ foreach ($dbh->query($sql) as $row) {
         </nav>
     </div>
     <main class="mdl-layout__content">
-        <div class="page-content"><!-- Your content goes here --></div>
+        <div class="page-content">
+
+            <div id="productPic">
+                <img src="Pictures/ProductPics/productPic-<?php echo $product['id'] ?>.jpg" alt="Whoops! No product picture found!">
+            </div>
+            <div id="productInfo">
+                <div id="productName">
+                    <h4><?php echo $product['name'] ?></h4>
+                </div>
+                <div id="productDesc">
+                    <h5>Description:</h5>
+
+                    <p><?php echo $product['description'] ?></p>
+                </div>
+                <div id="productBrand">
+                    <h5>Brand:</h5>
+
+                    <p><?php echo $product['type'] ?></p>
+                </div>
+                <div id="productDiameter">
+                    <h5>Product Diameter:</h5>
+
+                    <p><?php echo $product['diameter'] ?></p>
+                </div>
+
+                <div id="productThickness">
+                    <h5>Product Thickness:</h5>
+
+                    <p><?php echo $product['thickness'] ?></p>
+                </div>
+                <div id="productWeight">
+                    <h5>Weight:</h5>
+
+                    <p><?php echo $product['weight'] ?> Ounces</p>
+                </div>
+                <div id="productBatteries">
+                    <h5>Battery:</h5>
+
+                    <p><?php echo $product['power'] ?></p>
+                </div>
+                <div id="productMaterial">
+                    <h5>Material:</h5>
+
+                    <p><?php echo $product['material'] ?></p>
+                </div>
+                <div id="productBand">
+                    <h5>Band:</h5>
+
+                    <p><?php echo $product['band'] ?></p>
+                </div>
+                <div id="productModelNumber">
+                    <h5>Item Model Number:</h5>
+
+                    <p><?php echo $product['modelNumber'] ?></p>
+                </div>
+            </div>
+            <div id="productOrder">
+                <div id="productPrice">
+                    <h5>$<?php echo $product['price'] ?></h5>
+                </div>
+                <br>
+                <form method="post">
+                    <button type="submit" name="addToCart" value="1">Add to Cart</button>
+                </form>
+            </div>
+
+
+            <div id="container">
+
+                <div id="footer">
+                    <table id="footerTable">
+                        <tr>
+
+                            <th class="footer1"><a href="about.html">About OzWatch</a></th>
+                            <th class="footer1"><a href="about.html">Email Us</a></th>
+                        </tr>
+                        <tr>
+                            <th class="footer1"><a href="aboutUs.html">About Us</a></th>
+                            <th class="footer1"><a href="signin.html">Sign In</a></th>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
-</div>
-
-<div id="container">
-    <div id="homepic1">
-        <img id="picture1" src="Pictures/sideWatch.jpg">
-    </div>
-
-    <div id="cityBG">
-        <img id="picGroupBG" src="Pictures/blurBG.jpg">
-    </div>
-
-    <div id="picgroup1">
-        <img id="picture2" src="Pictures/sandRolex.jpg">
-        <img id="picture3" src="Pictures/fossilPort.jpg">
-        <img id="picture4" src="Pictures/perretCity.jpg">
-    </div>
-
-    <div id="textBox3">
-        <h4>Qualities timepieces from all types of brands and styles.</h4>
-    </div>
-
-    <div id="footerpic">
-        <img id="picture5" src="Pictures/smartwatch.jpg">
-    </div>
-
-    <div id="footer">
-        <table id="footerTable">
-            <tr>
-
-                <th class="footer1"><a href="about.html">About OzWatch</a></th>
-                <th class="footer1"><a href="about.html">Email Us</a></th>
-            </tr>
-            <tr>
-                <th class="footer1"><a href="aboutUs.html">About Us</a></th>
-                <th class="footer1"><a href="signin.html">Sign In</a></th>
-
-            </tr>
-        </table>
-    </div>
 </div>
 </body>
 </html>

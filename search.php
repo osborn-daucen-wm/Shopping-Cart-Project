@@ -16,10 +16,29 @@ $results = $stmt->fetchAll();
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="jquery.js"></script>
     <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="./material.min.css">
+    <script src="./material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <title>RentAPet</title>
 </head>
 
 <body>
+<style>
+    .mdl-layout__header-row {
+        background-color: #2C4251;
+    }
+    .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
+        padding-right: 0;
+    }
+    .mdl-layout-title {
+        font-size: 250% ;
+    }
+    #footer {
+        position: fixed;
+        bottom: 0;
+    }
+</style>
+
 <div class="demo-layout-waterfall mdl-layout mdl-js-layout">
     <header class="mdl-layout__header mdl-layout__header--waterfall">
         <!-- Top row, always visible -->
@@ -56,66 +75,74 @@ $results = $stmt->fetchAll();
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
+            <a class="mdl-navigation__link" href="search.php?product=Rolex">Rolex</a>
+            <a class="mdl-navigation__link" href="search.php?product=Fossil">Fossil</a>
+            <a class="mdl-navigation__link" href="search.php?product=Skagen">Skagen</a>
+            <a class="mdl-navigation__link" href="search.php?product=Bulova">Bulova</a>
+            <a class="mdl-navigation__link" href="search.php?product=Omega">Omega</a>
+            <a class="mdl-navigation__link" href="search.php?product=Breitling">Breitling</a>
+            <a class="mdl-navigation__link" href="search.php?product=Movado">Movado</a>
+            <a class="mdl-navigation__link" href="search.php?product=Citizen">Citizen</a>
+            <a class="mdl-navigation__link" href="search.php?product=Seiko">Seiko</a>
+            <a class="mdl-navigation__link" href="search.php?product=Invictus">Invictus</a>
+            <a class="mdl-navigation__link" href="search.php?product=Casio">Casio</a>
+            <a class="mdl-navigation__link" href="search.php?product=Suunto">Suunto</a>
         </nav>
     </div>
     <main class="mdl-layout__content">
-        <div class="page-content"><!-- Your content goes here --></div>
+        <div class="page-content">
+            <div id="container">
+
+                <div id="searchinfo">
+                    <h1><?php echo $_GET['product']; ?></h1>
+
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        if (count($results) > 0) {
+                            foreach ($results as $product) {
+
+                                $productname = $product['name'];
+
+                                echo '<tr>';
+                                echo "<td><a href='productPage.php?id=" . $product['id'] . "' style='color: #253237'>{$productname}</a></td>";
+                                echo '</tr>';
+                            }
+                        } else {
+                            echo '<tr>';
+                            echo '<td>0 Results Found.</td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                    <?php
+
+                    ?>
+                </div>
+
+                <div id="footer">
+                    <table id="footerTable">
+                        <tr>
+
+                            <th class="footer1"><a href="about.html">About OzWatch</a></th>
+                            <th class="footer1"><a href="about.html">Email Us</a></th>
+                        </tr>
+                        <tr>
+                            <th class="footer1"><a href="aboutUs.html">About Us</a></th>
+                            <th class="footer1"><a href="signin.html">Sign In</a></th>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
-
-<div id="container">
-
-    <div id="searchinfo">
-        <h1><?php echo $_GET['animal']; ?></h1>
-
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            if (count($results) > 0) {
-                foreach ($results as $product) {
-
-                    $productname = $product['name'];
-
-                    echo '<tr>';
-                    echo "<td><a href='productProfile.php?id=" . $product['id'] . "'>{$productname}</a></td>";
-                    echo '</tr>';
-                }
-            } else {
-                echo '<tr>';
-                echo '<td>0 Results Found.</td>';
-                echo '</tr>';
-            }
-            ?>
-            </tbody>
-        </table>
-        <?php
-
-        ?>
-    </div>
-
-    <div id="footer">
-        <table id="footerTable">
-            <tr>
-
-                <th class="footer1"><a href="about.html">About OzWatch</a></th>
-                <th class="footer1"><a href="about.html">Email Us</a></th>
-            </tr>
-            <tr>
-                <th class="footer1"><a href="aboutUs.html">About Us</a></th>
-                <th class="footer1"><a href="signin.html">Sign In</a></th>
-
-            </tr>
-        </table>
-    </div>
-</div>
 </body>
-
+</html>

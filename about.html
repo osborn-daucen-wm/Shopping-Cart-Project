@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+    <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+    <link rel="icon" type="image/png"
+          href="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnmTDYKCeLOIJbw2A3klLVfderw8VCr9gPdqAEv3NPZju2XrSovg">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="jquery.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="./material.min.css">
+    <script src="./material.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .mdl-layout__header-row {
+            background-color: #2C4251;
+        }
+        #footer {
+            margin-top: 3%;
+        }
+    </style>
+    <title>OzWatch</title>
 </head>
 <body>
 
+
+<!-- Uses a header that contracts as the page scrolls down. -->
+<style>
+    .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
+        padding-right: 0;
+    }
+    .mdl-layout-title {
+        font-size: 250% ;
+    }
+    #footer {
+        position: fixed;
+        bottom: 0%;
+    }
+</style>
+
+<div class="demo-layout-waterfall mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header mdl-layout__header--waterfall">
+        <!-- Top row, always visible -->
+        <div class="mdl-layout__header-row">
+            <!-- Title -->
+            <span class="mdl-layout-title"><a href="index.php">OzWatch</a></span>
+
+            <div class="mdl-layout-spacer"></div>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                <label class="mdl-button mdl-js-button mdl-button--icon"
+                       for="waterfall-exp">
+                    <i class="material-icons">search</i>
+                </label>
+
+                <div class="mdl-textfield__expandable-holder">
+                    <input class="mdl-textfield__input" type="text" name="sample"
+                           id="waterfall-exp">
+                </div>
+            </div>
+        </div>
+        <!-- Bottom row, not visible on scroll -->
+        <div class="mdl-layout__header-row">
+            <div class="mdl-layout-spacer"></div>
+            <!-- Navigation -->
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="signin.php">Sign In</a>
+                <a class="mdl-navigation__link" href="signup.php">Sign Up</a>
+                <a class="mdl-navigation__link" href="cart.php">Cart</a>
+                <a class="mdl-navigation__link" href="about.html">About</a>
+            </nav>
+        </div>
+    </header>
+    <div class="mdl-layout__drawer">
+        <span class="mdl-layout-title">Menu</span>
+        <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="search.php?product=rolex">Rolex</a>
+            <a class="mdl-navigation__link" href="">Fossil</a>
+            <a class="mdl-navigation__link" href="">Skagen</a>
+            <a class="mdl-navigation__link" href="">Belova</a>
+            <a class="mdl-navigation__link" href="">Omega</a>
+            <a class="mdl-navigation__link" href="">Brightling</a>
+            <a class="mdl-navigation__link" href="">Movato</a>
+            <a class="mdl-navigation__link" href="">Citizen</a>
+            <a class="mdl-navigation__link" href="">Seiko</a>
+            <a class="mdl-navigation__link" href="">Invictus</a>
+            <a class="mdl-navigation__link" href="">Casio</a>
+            <a class="mdl-navigation__link" href="">Suunto</a>
+        </nav>
+    </div>
+    <main class="mdl-layout__content">
+        <div class="page-content"><!-- Your content goes here --></div>
+    </main>
+</div>
+
+<div id="container">
+
+    <div id="aboutContent", width="50%">
+        <p>Here at OzWatch we strive to give you the best deals on watches from various retailers and manufacturers. We offer both brand new timepieces and used watches for those that still want a great watch for a great deal. We offer various types of watches as well including pocket watches, self-winding, and lithuim ion. We also offer various watches that have different uses. There are elegant watches that you can wear to a party, watches for the rugged hiker, watches designed for fitness, smartwatches, and much more!</p>
+    </div>
+
+    <div id="footer">
+        <table id="footerTable">
+            <tr>
+
+                <th class="footer1"><a href="about.html">About OzWatch</a></th>
+                <th class="footer1"><a href="about.html">Email Us</a></th>
+            </tr>
+            <tr>
+                <th class="footer1"><a href="aboutUs.html">About Us</a></th>
+                <th class="footer1"><a href="signin.html">Sign In</a></th>
+
+            </tr>
+        </table>
+    </div>
+</div>
 </body>
 </html>
