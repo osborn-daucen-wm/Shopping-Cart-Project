@@ -3,6 +3,7 @@ require_once('connect.php');
 $error = false;
 $success = false;
 
+session_start();
 
 $stmt = $dbh->prepare("select * from products where id = " . $_GET['id']);
 $stmt->execute();
@@ -11,13 +12,15 @@ $product = $stmt->fetch();
 if (@$_POST['addToCart']) {
     $errorMessage = false;
 
-    $sql = $dbh->prepare("INSERT INTO cart (id, name, price) VALUES (:id, :name, :price)");
+    $sql = $dbh->prepare("INSERT INTO cart (user_id, `name`, product_id, price) VALUES (:user_id, :name, :product_id, :price :quantity) on duplicate key update quantity = :quantity");
 
     $result = $sql->execute(
         array(
-            'id' => NULL,
-            'name' => $_POST['name'],
-            'price' => $_POST['price'],
+            'user_id' => $_SESSION['user']['id'],
+            'name' => $product['name'],
+            'product_id' => $product['id'],
+            'price' => $product['price'],
+            'quantity' => $_POST['quantity']
         )
     );
 
@@ -25,8 +28,8 @@ if (@$_POST['addToCart']) {
 
     }
     {
-        echo("<p>There was an error with your form:</p>\n");
-        echo("<ul>" . $errorMessage . "</ul>\n");
+        //echo("<p>There was an error adding the item to the cart!</p>");
+        //echo("<ul>" . $errorMessage . "</ul>");
     }
 
 }
@@ -136,60 +139,57 @@ if (@$_POST['addToCart']) {
                     <h4><?php echo $product['name'] ?></h4>
                 </div>
                 <div id="productDesc">
-                    <h5>Description:</h5>
 
-                    <p><?php echo $product['description'] ?></p>
+                    Description:<p><?php echo $product['description'] ?></p>
                 </div>
                 <div id="productBrand">
-                    <h5>Brand:</h5>
 
-                    <p><?php echo $product['type'] ?></p>
+                    Brand:<p><?php echo $product['type'] ?></p>
                 </div>
                 <div id="productDiameter">
-                    <h5>Product Diameter:</h5>
 
-                    <p><?php echo $product['diameter'] ?></p>
+                    Product Diameter:<p><?php echo $product['diameter'] ?></p>
                 </div>
 
                 <div id="productThickness">
-                    <h5>Product Thickness:</h5>
 
-                    <p><?php echo $product['thickness'] ?></p>
+                    Product Thickness:<p><?php echo $product['thickness'] ?></p>
                 </div>
                 <div id="productWeight">
-                    <h5>Weight:</h5>
 
-                    <p><?php echo $product['weight'] ?> Ounces</p>
+                    Weight:<p><?php echo $product['weight'] ?> Ounces</p>
                 </div>
                 <div id="productBatteries">
-                    <h5>Battery:</h5>
 
-                    <p><?php echo $product['power'] ?></p>
+                    Battery:<p><?php echo $product['power'] ?></p>
                 </div>
                 <div id="productMaterial">
-                    <h5>Material:</h5>
 
-                    <p><?php echo $product['material'] ?></p>
+                    Material:<p><?php echo $product['material'] ?></p>
                 </div>
                 <div id="productBand">
-                    <h5>Band:</h5>
 
-                    <p><?php echo $product['band'] ?></p>
+                    Band:<p><?php echo $product['band'] ?></p>
                 </div>
                 <div id="productModelNumber">
-                    <h5>Item Model Number:</h5>
 
-                    <p><?php echo $product['modelNumber'] ?></p>
+                    Item Model Number:<p><?php echo $product['modelNumber'] ?></p>
                 </div>
             </div>
             <div id="productOrder">
                 <div id="productPrice">
                     <h5>$<?php echo $product['price'] ?></h5>
                 </div>
-                <br>
                 <form method="post">
-                    <button type="submit" name="addToCart" value="1">Add to Cart</button>
+                    Quantity:<input type="number" name="quantity" id="quantity" value="1">
+                    <br>
+                    <button type="submit" name="addToCart" value="<?php echo $product['id'] ?>">Add to Cart</button>
                 </form>
+                <?php
+                if (@$_POST['addToCart']) {
+                    echo("<p>Watch was added to your cart!</p>");
+                }
+                ?>
             </div>
 
 

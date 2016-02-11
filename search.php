@@ -3,6 +3,8 @@ require_once('connect.php');
 $error = false;
 $success = false;
 
+session_start();
+
 $stmt = $dbh->prepare("SELECT * FROM products p WHERE p.type = :product");
 $stmt->execute(array(':product' => $_GET['product']));
 $results = $stmt->fetchAll();
@@ -12,14 +14,22 @@ $results = $stmt->fetchAll();
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
-          href="http://cdn.mysitemyway.com/etc-mysitemyway/icons/legacy-previews/icons/black-paint-splatter-icons-alphanumeric/069096-black-paint-splatter-icon-alphanumeric-letter-rr.png">
+          href="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnmTDYKCeLOIJbw2A3klLVfderw8VCr9gPdqAEv3NPZju2XrSovg">
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="jquery.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <link rel="stylesheet" href="./material.min.css">
     <script src="./material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <title>RentAPet</title>
+    <style>
+        .mdl-layout__header-row {
+            background-color: #2C4251;
+        }
+        #footer {
+            margin-top: 3%;
+        }
+    </style>
+    <title>OzWatch</title>
 </head>
 
 <body>

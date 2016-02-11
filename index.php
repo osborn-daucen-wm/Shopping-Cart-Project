@@ -1,6 +1,9 @@
 <!-- OPEN IN FIREFOX IF THE VIDEO DOES NOT LOAD RIGHT AWAY --- DO NOT OPEN IN SAFARI @ ALL --- IF YOU OPEN IN CHROME IT MIGHT TAKE SOME TIME FOR THE VIDEO TO LOAD -->
 <?php
 require_once('connect.php');
+
+session_start();
+
 $error = false;
 $success = false;
 

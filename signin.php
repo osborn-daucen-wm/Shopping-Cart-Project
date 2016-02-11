@@ -5,11 +5,8 @@ $success = false;
 
 session_start();
 
-//$registered = $_SESSION["registered"];
-//$username = $_SESSION["username"];
-
-if(isset($_SESSION['username'])){
-    header('location: index.php');
+if(@isset($_SESSION['user']['id'])){
+    header('Location: index.php');
 }
 
 $error = false;
@@ -33,14 +30,17 @@ if(@$_POST['login']) {
 
         $success = "User, " . $_POST['username'] . " was successfully logged in.";
 
-        $_SESSION["firstname"] = $userinfo['firstname'];
-        $_SESSION["username"] = $userinfo['username'];
+//        $_SESSION["firstname"] = $userinfo['firstname'];
+//        $_SESSION["username"] = $userinfo['username'];
+        $_SESSION['user'] = $userinfo;
 
         header("Location: index.php");
     } else {
         $success = "There was an error logging into the account.";
     }
 }
+
+
 ?>
 
 <!DOCTYPE html>
