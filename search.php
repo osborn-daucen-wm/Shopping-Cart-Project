@@ -94,7 +94,7 @@ $results = $stmt->fetchAll();
             <a class="mdl-navigation__link" href="search.php?product=Movado">Movado</a>
             <a class="mdl-navigation__link" href="search.php?product=Citizen">Citizen</a>
             <a class="mdl-navigation__link" href="search.php?product=Seiko">Seiko</a>
-            <a class="mdl-navigation__link" href="search.php?product=Invictus">Invictus</a>
+            <a class="mdl-navigation__link" href="search.php?product=Invicta">Invicta</a>
             <a class="mdl-navigation__link" href="search.php?product=Casio">Casio</a>
             <a class="mdl-navigation__link" href="search.php?product=Suunto">Suunto</a>
         </nav>

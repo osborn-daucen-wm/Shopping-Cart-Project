@@ -123,7 +123,7 @@ if (@$_POST['addToCart']) {
             <a class="mdl-navigation__link" href="search.php?product=Movado">Movado</a>
             <a class="mdl-navigation__link" href="search.php?product=Citizen">Citizen</a>
             <a class="mdl-navigation__link" href="search.php?product=Seiko">Seiko</a>
-            <a class="mdl-navigation__link" href="search.php?product=Invictus">Invictus</a>
+            <a class="mdl-navigation__link" href="search.php?product=Invicta">Invicta</a>
             <a class="mdl-navigation__link" href="search.php?product=Casio">Casio</a>
             <a class="mdl-navigation__link" href="search.php?product=Suunto">Suunto</a>
         </nav>
@@ -148,12 +148,12 @@ if (@$_POST['addToCart']) {
                 </div>
                 <div id="productDiameter">
 
-                    Product Diameter:<p><?php echo $product['diameter'] ?></p>
+                    Product Diameter:<p><?php echo $product['diameter'] ?> mm.</p>
                 </div>
 
                 <div id="productThickness">
 
-                    Product Thickness:<p><?php echo $product['thickness'] ?></p>
+                    Product Thickness:<p><?php echo $product['thickness'] ?> mm.</p>
                 </div>
                 <div id="productWeight">
 

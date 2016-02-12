@@ -278,7 +278,7 @@ a:hover,a:focus{
 #cartItems {
     background: #F1F2EB;
     width: 65%;
-    margin-left: 2%;
+    margin-left: 1%;
     height: 100%;
     border: #DD3737 5px solid;
     border-top: 0px;
@@ -299,7 +299,9 @@ a:hover,a:focus{
 }
 
 #cartTable {
-    position: absolute;
-    left: 4%;
+    position: relative;
     align-content: left;
+    align-items: left;
+    width: 100%;
+    padding: 2%;
 }

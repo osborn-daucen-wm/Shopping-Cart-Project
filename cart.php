@@ -1,10 +1,12 @@
 <?php
 require_once('connect.php');
+$error = false;
+$success = false;
 
 session_start();
 
 $stmt = $dbh->prepare("SELECT * FROM cart c WHERE c.user_id = :carts");
-$stmt->execute(array(':carts' => $_GET['carts']));
+$stmt->execute(array(':carts' => $_SESSION['user']['id']));
 $results = $stmt->fetchAll();
 
 ?>
@@ -100,7 +102,7 @@ $results = $stmt->fetchAll();
             <a class="mdl-navigation__link" href="search.php?product=Movado">Movado</a>
             <a class="mdl-navigation__link" href="search.php?product=Citizen">Citizen</a>
             <a class="mdl-navigation__link" href="search.php?product=Seiko">Seiko</a>
-            <a class="mdl-navigation__link" href="search.php?product=Invictus">Invictus</a>
+            <a class="mdl-navigation__link" href="search.php?product=Invicta">Invicta</a>
             <a class="mdl-navigation__link" href="search.php?product=Casio">Casio</a>
             <a class="mdl-navigation__link" href="search.php?product=Suunto">Suunto</a>
         </nav>
@@ -113,24 +115,23 @@ $results = $stmt->fetchAll();
                     <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
                     if (count($results) > 0) {
-                        foreach ($results as $cart) {
+                        foreach ($results as $carts) {
 
-                            $itemname = $cart['name'];
-                            $itemprice = $cart['price'];
+                            $itemname = $carts['name'];
+                            $itemquantity = $carts['quantity'];
+                            $itemprice = $carts['price'];
 
                             echo '<tr>';
                             echo "<td>{$itemname}</td>";
+                            echo "<td>{$itemquantity}</td>";
                             echo "<td>{$itemprice}</td>";
-                            ?>
-                                <form>
-                                    <input type="number">
-                                </form>
-                            <?php
                             echo '</tr>';
                         }
                     } else {
@@ -148,7 +149,7 @@ $results = $stmt->fetchAll();
 
             <div id="cartCheckout">
                 <div id="cartPrices">
-                    <h5></h5>
+                    <h5>Total:</h5>
                 </div>
                 <br>
                 <form method="post">
