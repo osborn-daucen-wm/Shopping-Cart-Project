@@ -21,12 +21,13 @@ if (@$_POST['formSubmit']) {
     }
 
 
-    $stmt = $dbh->prepare("INSERT INTO users (id, firstname, username, email, password) VALUES (:id, :firstname, :username, :email, :password)");
+    $stmt = $dbh->prepare("INSERT INTO users (id, firstname, lastname, username, email, password) VALUES (:id, :firstname, :lastname, :username, :email, :password)");
 
     $result = $stmt->execute(
         array(
             'id' => NULL,
             'firstname' => $_POST['firstname'],
+            'lastname' => $_POST['lastname'],
             'username' => $_POST['username'],
             'email' => $_POST['email'],
             'password' => $_POST['password']
@@ -37,8 +38,8 @@ if (@$_POST['formSubmit']) {
 
     }
     {
-        echo("<p>There was an error with your form:</p>\n");
-        echo("<ul>" . $errorMessage . "</ul>\n");
+        //echo("<p>There was an error with your form:</p>\n");
+        //echo("<ul>" . $errorMessage . "</ul>\n");
     }
 
 }
@@ -150,8 +151,10 @@ if (@$_POST['formSubmit']) {
         <center>
             <form method="post">
                 <h2>Register for OzWatch</h2>
-                <label>Name :</label>
+                <label>First Name :</label>
                 <input type="text" name="firstname" id="name" required> <br><br>
+                <label>Last Name: </label>
+                <input type="text" name="lastname" id="lname" required> <br><br>
                 <label>Email :</label>
                 <input type="text" name="email" id="email" required> <br><br>
                 <label> Username : </label>

@@ -12,7 +12,7 @@ $product = $stmt->fetch();
 if (@$_POST['addToCart']) {
     $errorMessage = false;
 
-    $sql = $dbh->prepare("INSERT INTO cart (user_id, `name`, product_id, price) VALUES (:user_id, :name, :product_id, :price :quantity) on duplicate key update quantity = :quantity");
+    $sql = $dbh->prepare("INSERT INTO cart (user_id, `name`, product_id, price, quantity) VALUES (:user_id, :name, :product_id, :price, :quantity) on duplicate key update quantity = :quantity");
 
     $result = $sql->execute(
         array(
@@ -25,11 +25,8 @@ if (@$_POST['addToCart']) {
     );
 
     if (!$result) {
-
-    }
-    {
-        //echo("<p>There was an error adding the item to the cart!</p>");
-        //echo("<ul>" . $errorMessage . "</ul>");
+        echo("<p>There was an error adding the item to the cart!</p>");
+        echo("<ul>" . $errorMessage . "</ul>");
     }
 
 }

@@ -130,8 +130,8 @@ $results = $stmt->fetchAll();
 
                             echo '<tr>';
                             echo "<td>{$itemname}</td>";
-                            echo "<td>{$itemquantity}</td>";
-                            echo "<td>{$itemprice}</td>";
+                            echo "<td>{$itemquantity} x</td>";
+                            echo "<td class='cartPrice'>{$itemprice}</td>";
                             echo '</tr>';
                         }
                     } else {
