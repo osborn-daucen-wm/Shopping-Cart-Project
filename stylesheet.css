@@ -39,6 +39,7 @@ table {
     margin-right:auto;
 
 }
+
 #footerContainer {
     margin-top: 40px;
     text-align:center;
@@ -211,13 +212,14 @@ a:hover,a:focus{
 }
 
 #footerTable {
-    width: 90%;
+    width: 500px;
     height: 75px;
     color: #F1F2EB;
     background: #2C4251;
     font-size: 20px;
     bottom: 0;
     margin-left: 0%;
+    padding: 2px;
 }
 
 #form {
@@ -304,4 +306,17 @@ a:hover,a:focus{
     align-items: left;
     width: 100%;
     padding: 2%;
+}
+
+#FAQContent {
+    padding: 3%;
+    font-family: Oswald;
+    font-size: 100px;
+    color: #DD3737;
+    width: 60%;
+    margin-bottom: 85px;
+}
+
+.footer1 {
+    font-size: 15px;
 }

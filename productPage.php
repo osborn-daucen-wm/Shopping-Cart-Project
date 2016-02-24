@@ -28,15 +28,21 @@ if (@$_POST['addToCart']) {
         echo("<p>There was an error adding the item to the cart!</p>");
         echo("<ul>" . $errorMessage . "</ul>");
     }
+    else{
+        $total = $total . ($product['price'] * $_POST['quantity']);
+    }
 
 }
+$totalPrice = array($total);
+print_r($totalPrice);
+
 ?>
 <!DOCTYPE html>
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
           href="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnmTDYKCeLOIJbw2A3klLVfderw8VCr9gPdqAEv3NPZju2XrSovg">
-    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+
     <script src="jquery.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <link rel="stylesheet" href="./material.min.css">
@@ -195,14 +201,11 @@ if (@$_POST['addToCart']) {
                 <div id="footer">
                     <table id="footerTable">
                         <tr>
-
+                            <th class="footer1">Copyright OzWatch 2016</th>
                             <th class="footer1"><a href="about.html">About OzWatch</a></th>
-                            <th class="footer1"><a href="about.html">Email Us</a></th>
-                        </tr>
-                        <tr>
-                            <th class="footer1"><a href="aboutUs.html">About Us</a></th>
-                            <th class="footer1"><a href="signin.html">Sign In</a></th>
-
+                            <th class="footer1"><a href="index.php">Home</a></th>
+                            <th class="footer1"><a href="FAQ.html">FAQ</a></th>
+                            <th class="footer1"><a href="signin.php">Sign In</a></th>
                         </tr>
                     </table>
                 </div>

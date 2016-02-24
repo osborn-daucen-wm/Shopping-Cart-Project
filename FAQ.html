@@ -1,50 +1,4 @@
-<?php
-require_once('connect.php');
-$error = false;
-$success = false;
-
-session_start();
-
-if(@isset($_SESSION['user']['id'])){
-    header('Location: index.php');
-}
-
-$error = false;
-$success = false;
-
-if(@$_POST['login']) {
-    if (!$_POST['username']) {
-    }
-    if (!$_POST['password']) {
-    }
-
-    $query = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-    $result = $query->execute(
-        array(
-            'username' => $_POST['username'],
-            'password' => $_POST['password']
-        )
-    );
-    $userinfo = $query->fetch();
-    if ($userinfo) {
-
-        $success = "User, " . $_POST['username'] . " was successfully logged in.";
-
-//        $_SESSION["firstname"] = $userinfo['firstname'];
-//        $_SESSION["username"] = $userinfo['username'];
-        $_SESSION['user'] = $userinfo;
-
-        header("Location: index.php");
-    } else {
-        $success = "There was an error logging into the account.";
-    }
-}
-
-
-?>
-
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
@@ -59,32 +13,27 @@ if(@$_POST['login']) {
         .mdl-layout__header-row {
             background-color: #2C4251;
         }
-        html, body {
-            height: 100%
-        }
-        .signupfoot {
-            position: inherit;
-            bottom: 0px;
-        }
         #footer {
-            position: fixed;
-            bottom: 0%;
+            position: relative;
+            margin-top: 3%;
         }
-        .mdl-layout__content {
-            z-index: -1;
-        }
-
     </style>
     <title>OzWatch</title>
 </head>
 <body>
+
+
+<!-- Uses a header that contracts as the page scrolls down. -->
 <style>
     .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
         padding-right: 0;
     }
-
     .mdl-layout-title {
-        font-size: 250%;
+        font-size: 250% ;
+    }
+    #footer {
+        position: fixed;
+        bottom: 0%;
     }
 </style>
 
@@ -124,7 +73,7 @@ if(@$_POST['login']) {
     <div class="mdl-layout__drawer">
         <span class="mdl-layout-title">Menu</span>
         <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="search.php?product=Rolex">Rolex</a>
+            <<a class="mdl-navigation__link" href="search.php?product=Rolex">Rolex</a>
             <a class="mdl-navigation__link" href="search.php?product=Fossil">Fossil</a>
             <a class="mdl-navigation__link" href="search.php?product=Skagen">Skagen</a>
             <a class="mdl-navigation__link" href="search.php?product=Bulova">Bulova</a>
@@ -145,38 +94,22 @@ if(@$_POST['login']) {
 
 <div id="container">
 
-    <div id="form">
-        <center>
-            <form method="POST">
-                <h2>Sign - In</h2>
-                <label>Username :</label>
-                <input type="text" name="username" id="name" required> <br><br>
-                <label> Password :</label>
-                <input type="text" name="password" id="passsword" required> <br><br>
-                <button type="submit" name="login" value="1">Sign In</button>
-                <?php
-                if(isset($_SESSION['registered'])){
-                    echo '<p id="registered">Successfully Registered</p>';
-                    unset($_SESSION['registered']);
-                }
-                ?>
-                <?php
-                if($error){
-                    echo $error;
-                    echo '<br>';
-                }
-                if($success){
-                    echo $success;
-                    echo '<br>';
-                }
-                ?>
-            </form>
-            <div id="buttonsu">
-                <a href="signup.php">
-                    <button>Sign Up</button>
-                </a>
-            </div>
-        </center>
+    <div id="FAQContent", width="50%">
+        <h3>FAQ</h3>
+        <h5>Do we get free shipping?</h5>
+        <p>We offer free shipping to anyone within 50 miles of our headquarters in Phoenix, Arizona.</p>
+        <br>
+        <h5>Do you sell strictly watches?</h5>
+        <p>Yes, only watches but of various types and brands.</p>
+        <br>
+        <h5>What are your future prospects?</h5>
+        <p>We will expand our product line to other brands and more of certain brands.</p>
+        <br>
+        <h5>Can I track my shipment?</h5>
+        <p>We are currently working on applying this feature for future use.</p>
+        <br>
+        <h5>Can I change or cancel my order?</h5>
+        <p>We do give refunds but we cannot change or cancel orders during shipping. This is a feature we are looking to add in the future.</p>
     </div>
 
     <div id="footer">
@@ -190,9 +123,6 @@ if(@$_POST['login']) {
             </tr>
         </table>
     </div>
-
 </div>
-
 </body>
-
 </html>

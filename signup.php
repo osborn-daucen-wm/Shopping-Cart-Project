@@ -172,15 +172,11 @@ if (@$_POST['formSubmit']) {
     <div id="footer">
         <table id="footerTable">
             <tr>
-
-
+                <th class="footer1">Copyright OzWatch 2016</th>
                 <th class="footer1"><a href="about.html">About OzWatch</a></th>
-                <th class="footer1"><a href="about.html">Email Us</a></th>
-            </tr>
-            <tr>
-                <th class="footer1"><a href="aboutUs.html">About Us</a></th>
-                <th class="footer1"><a href="signin.html">Sign In</a></th>
-
+                <th class="footer1"><a href="index.php">Home</a></th>
+                <th class="footer1"><a href="FAQ.html">FAQ</a></th>
+                <th class="footer1"><a href="signin.php">Sign In</a></th>
             </tr>
         </table>
     </div>
