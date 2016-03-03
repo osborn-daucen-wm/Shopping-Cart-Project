@@ -9,6 +9,10 @@ $stmt = $dbh->prepare("SELECT * FROM cart c WHERE c.user_id = :carts");
 $stmt->execute(array(':carts' => $_SESSION['user']['id']));
 $results = $stmt->fetchAll();
 
+$total = 0;
+
+$delete = $dbh->prepare("Delete FROM cart c WHERE c.user_id");
+$stmt->execute(array(':carts' => $_SESSION['user']['id']));
 ?>
 <!DOCTYPE html>
 <head>
@@ -85,6 +89,7 @@ $results = $stmt->fetchAll();
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="signin.php">Sign In</a>
                 <a class="mdl-navigation__link" href="signup.php">Sign Up</a>
+                <a class="mdl-navigation__link" href="profile.php">My Profile</a>
                 <a class="mdl-navigation__link" href="cart.php">Cart</a>
                 <a class="mdl-navigation__link" href="about.html">About</a>
             </nav>
@@ -109,7 +114,7 @@ $results = $stmt->fetchAll();
     </div>
     <main class="mdl-layout__content">
         <div class="page-content">
-
+            <div id="container">
             <div id="cartItems">
                 <table id="cartTable">
                     <thead>
@@ -128,38 +133,35 @@ $results = $stmt->fetchAll();
                             $itemquantity = $carts['quantity'];
                             $itemprice = $carts['price'];
 
-                            echo '<tr>';
-                            echo "<td>{$itemname}</td>";
-                            echo "<td>{$itemquantity} x</td>";
-                            echo "<td class='cartPrice'>{$itemprice}</td>";
-                            echo '</tr>';
+                            $total += $itemprice * $itemquantity;
+
+                            if (count($results) > 0) {
+                                echo '<tr>';
+                                echo "<td>{$itemname}</td>";
+                                echo "<td class='multiplier'>{$itemquantity} x</td>";
+                                echo "<td class='cartPrice'>{$itemprice}</td>";
+                                echo '</tr>';
+                            } else {
+                                echo '<tr>';
+                                echo '<td>There is nothing in your cart!</td>';
+                                echo '</tr>';
+                            }
                         }
-                    } else {
-                        echo '<tr>';
-                        echo '<td>There is nothing in your cart!</td>';
-                        echo '</tr>';
                     }
                     ?>
                     </tbody>
                 </table>
-                <?php
-
-                ?>
             </div>
 
             <div id="cartCheckout">
                 <div id="cartPrices">
-                    <h5>Total:</h5>
+                    <h5>Total: $<?php echo $total . "\n";?></h5>
                 </div>
                 <br>
                 <form method="post">
-                    <button type="submit" name="checkout" value="<?php echo $product['id'] ?>">Checkout</button>
+                    <button type="submit" name="checkout" value="<?php echo $product['id']; header("Location: index.php")?>"><a href="checkout.php" style="color: #202020">Checkout</a></button>
                 </form>
             </div>
-
-
-            <div id="container">
-
                 <div id="footer">
                     <table id="footerTable">
                         <tr>

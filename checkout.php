@@ -5,44 +5,35 @@ $success = false;
 
 session_start();
 
-if(@isset($_SESSION['user']['id'])){
-    header('Location: index.php');
-}
+if (@$_POST['locationForm']) {
+    $errorMessage = false;
 
-$error = false;
-$success = false;
+    $sql = $dbh->prepare("INSERT INTO users (address one, address two, city, state, ZIP, country, cardNumber, CVC, expirationMonth, expirationYear) VALUES (:Add1, :Add2, :City, :State, :ZIP, :Country, :cardNumber, :CVC, :expMonth, :expYear)");
 
-if(@$_POST['login']) {
-    if (!$_POST['username']) {
-    }
-    if (!$_POST['password']) {
-    }
-
-    $query = $dbh->prepare("SELECT * FROM users WHERE username = :username AND password = :password");
-    $result = $query->execute(
+    $result = $sql->execute(
         array(
-            'username' => $_POST['username'],
-            'password' => $_POST['password']
+            'Add1' => $_POST['Add1'],
+            'Add2' => $_POST['Add2'],
+            'City' => $_POST['City'],
+            'State' => $_POST['State'],
+            'ZIP' => $_POST['ZIP'],
+            'Country' => $_POST['Country'],
+            'cardNumber' => $_POST['cardNumber'],
+            'CVC' => $_POST['CVC'],
+            'expMonth' => $_POST['expMonth'],
+            'expYear' => $_POST['expYear']
         )
     );
-    $userinfo = $query->fetch();
-    if ($userinfo) {
 
-        $success = "User, " . $_POST['username'] . " was successfully logged in.";
-
-        $_SESSION['user'] = $userinfo;
-
-        header("Location: index.php");
-    } else {
-        $success = "There was an error logging into the account.";
+    if (!$result) {
+        echo("<p>There was an error checking out!</p>");
+        echo("<ul>" . $errorMessage . "</ul>");
     }
+
 }
-
-
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
@@ -57,32 +48,26 @@ if(@$_POST['login']) {
         .mdl-layout__header-row {
             background-color: #2C4251;
         }
-        html, body {
-            height: 100%
-        }
-        .signupfoot {
-            position: inherit;
-            bottom: 0px;
-        }
         #footer {
+            margin-top: 3%;
+        }
+        .demo-layout-waterfall {
             position: fixed;
-            bottom: 0%;
+            top: 0px;
         }
-        .mdl-layout__content {
-            z-index: -1;
-        }
-
     </style>
     <title>OzWatch</title>
 </head>
 <body>
+
+
+<!-- Uses a header that contracts as the page scrolls down. -->
 <style>
     .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
         padding-right: 0;
     }
-
     .mdl-layout-title {
-        font-size: 250%;
+        font-size: 250% ;
     }
 </style>
 
@@ -141,57 +126,51 @@ if(@$_POST['login']) {
         <div class="page-content"><!-- Your content goes here --></div>
     </main>
 </div>
-
 <div id="container">
-
-    <div id="form">
+    <div id="locationForm">
         <center>
-            <form method="POST">
-                <h2>Sign - In</h2>
-                <label>Username :</label>
-                <input type="text" name="username" id="name" required> <br><br>
-                <label> Password :</label>
-                <input type="password" name="password" id="passsword" required> <br><br>
-                <button type="submit" name="login" value="1">Sign In</button>
-                <?php
-                if(isset($_SESSION['registered'])){
-                    echo '<p id="registered">Successfully Registered</p>';
-                    unset($_SESSION['registered']);
-                }
-                ?>
-                <?php
-                if($error){
-                    echo $error;
-                    echo '<br>';
-                }
-                if($success){
-                    echo $success;
-                    echo '<br>';
-                }
-                ?>
+            <form method="post">
+                <h2>Shipping Information</h2>
+                <label>Address Line 1: </label>
+                <input type="text" name="Add1" id="Addy1" required> <br><br>
+                <label>Address Line 2: </label>
+                <input type="text" name="Add2" id="Addy2"> <br><br>
+                <label>City: </label>
+                <input type="text" name="City" id="city" required> <br><br>
+                <label>State/Province/Region: </label>
+                <input type="text" name="State" id="state" required> <br><br>
+                <label>ZIP/Postal Code: </label>
+                <input type="number" name="ZIP" id="zip" required><br><br>
+                <label>Country: </label>
+                <input type="text" name="Country" id="country" required><br><br>
+                <label>Credit Card Number: </label>
+                <input type="text" name="cardNumber" size="20" data-stripe="number" required/>
+                <label>CVC: </label>
+                <input type="text" name="CVC" size="4" data-stripe="cvc" required/>
+                <label>Expiration (MM/YYYY): </label>
+                <input type="text" name="expMonth" size="2" data-stripe="exp-month" required/>
+                <label> / </label>
+                <input type="text" name="expYear" size="4" data-stripe="exp-year" required/>
+                <br>
+                <br>
+                <button type="submit" name="formSubmit" value="1"><a href="index.php" style="color: #202020">Finish Order</a></button>
+
             </form>
-            <div id="buttonsu">
-                <a href="signup.php">
-                    <button>Sign Up</button>
-                </a>
-            </div>
         </center>
     </div>
 
-    <div id="footer">
-        <table id="footerTable">
-            <tr>
-                <th class="footer1">Copyright OzWatch 2016</th>
-                <th class="footer1"><a href="about.html">About OzWatch</a></th>
-                <th class="footer1"><a href="index.php">Home</a></th>
-                <th class="footer1"><a href="FAQ.html">FAQ</a></th>
-                <th class="footer1"><a href="signin.php">Sign In</a></th>
-            </tr>
-        </table>
-    </div>
 
+<div id="footer">
+    <table id="footerTable">
+        <tr>
+            <th class="footer1">Copyright OzWatch 2016</th>
+            <th class="footer1"><a href="about.html">About OzWatch</a></th>
+            <th class="footer1"><a href="index.php">Home</a></th>
+            <th class="footer1"><a href="FAQ.html">FAQ</a></th>
+            <th class="footer1"><a href="signin.php">Sign In</a></th>
+        </tr>
+    </table>
 </div>
-
+</div>
 </body>
-
 </html>

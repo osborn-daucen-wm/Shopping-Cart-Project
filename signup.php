@@ -118,6 +118,7 @@ if (@$_POST['formSubmit']) {
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="signin.php">Sign In</a>
                 <a class="mdl-navigation__link" href="signup.php">Sign Up</a>
+                <a class="mdl-navigation__link" href="profile.php">My Profile</a>
                 <a class="mdl-navigation__link" href="cart.php">Cart</a>
                 <a class="mdl-navigation__link" href="about.html">About</a>
             </nav>
@@ -151,15 +152,15 @@ if (@$_POST['formSubmit']) {
         <center>
             <form method="post">
                 <h2>Register for OzWatch</h2>
-                <label>First Name :</label>
+                <label>First Name:</label>
                 <input type="text" name="firstname" id="name" required> <br><br>
                 <label>Last Name: </label>
                 <input type="text" name="lastname" id="lname" required> <br><br>
-                <label>Email :</label>
+                <label>Email:</label>
                 <input type="text" name="email" id="email" required> <br><br>
-                <label> Username : </label>
+                <label> Username: </label>
                 <input type="text" name="username" id="username" required> <br><br>
-                <label>Password :</label>
+                <label>Password:</label>
                 <input type="password" name="password" id="password" required><br><br>
                 <br>
 

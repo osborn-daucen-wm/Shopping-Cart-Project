@@ -12,7 +12,7 @@ $product = $stmt->fetch();
 if (@$_POST['addToCart']) {
     $errorMessage = false;
 
-    $sql = $dbh->prepare("INSERT INTO cart (user_id, `name`, product_id, price, quantity) VALUES (:user_id, :name, :product_id, :price, :quantity) on duplicate key update quantity = :quantity");
+    $sql = $dbh->prepare("INSERT INTO cart (user_id, `name`, product_id, price, quantity, total) VALUES (:user_id, :name, :product_id, :price, :quantity, :totalPrice) on duplicate key update quantity = :quantity");
 
     $result = $sql->execute(
         array(
@@ -20,21 +20,17 @@ if (@$_POST['addToCart']) {
             'name' => $product['name'],
             'product_id' => $product['id'],
             'price' => $product['price'],
-            'quantity' => $_POST['quantity']
-        )
+            'quantity' => $_POST['quantity'],
+            'totalPrice' => $product['price'] * $_POST['quantity']
+)
     );
 
     if (!$result) {
         echo("<p>There was an error adding the item to the cart!</p>");
         echo("<ul>" . $errorMessage . "</ul>");
     }
-    else{
-        $total = $total . ($product['price'] * $_POST['quantity']);
-    }
 
 }
-$totalPrice = array($total);
-print_r($totalPrice);
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +38,7 @@ print_r($totalPrice);
     <link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
     <link rel="icon" type="image/png"
           href="https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcSnmTDYKCeLOIJbw2A3klLVfderw8VCr9gPdqAEv3NPZju2XrSovg">
-
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
     <script src="jquery.js"></script>
     <script type="text/javascript" src="script.js"></script>
     <link rel="stylesheet" href="./material.min.css">
@@ -109,6 +105,7 @@ print_r($totalPrice);
             <nav class="mdl-navigation">
                 <a class="mdl-navigation__link" href="signin.php">Sign In</a>
                 <a class="mdl-navigation__link" href="signup.php">Sign Up</a>
+                <a class="mdl-navigation__link" href="profile.php">My Profile</a>
                 <a class="mdl-navigation__link" href="cart.php">Cart</a>
                 <a class="mdl-navigation__link" href="about.html">About</a>
             </nav>

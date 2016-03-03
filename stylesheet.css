@@ -285,6 +285,7 @@ a:hover,a:focus{
     border: #DD3737 5px solid;
     border-top: 0px;
     padding: 2%;
+    margin-bottom: 80px;
 }
 
 #cartCheckout {
@@ -319,4 +320,8 @@ a:hover,a:focus{
 
 .footer1 {
     font-size: 15px;
+}
+
+#userTable {
+    position: relative;
 }
